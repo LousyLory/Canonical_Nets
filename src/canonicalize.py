@@ -1,4 +1,3 @@
-# one test for canonicalization on model 2
 from copy import deepcopy
 import numpy as np
 
