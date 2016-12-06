@@ -367,6 +367,12 @@ class FullyConnectedNet(object):
     out4 = np.sum(-out3hat[np.arange(out1.shape[0]), y] + row_sums) / out1.shape[0]
     loss += out4 + reg_loss
     '''
+    if np.isnan(loss):
+        if np.isnan(scores).any():
+            print "scores: ", scores
+        return 0
+    '''
+    '''
     for i in range(self.num_layers):
         W_name = 'W'+str(i+1)
         loss += 0.5*self.reg*np.sum(self.params[W_name]*self.params[W_name])
