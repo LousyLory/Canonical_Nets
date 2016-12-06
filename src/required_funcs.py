@@ -1,4 +1,3 @@
-from munkres import Munkres
 import numpy as np
 from dist_fun import *
 
@@ -9,6 +8,7 @@ def match_vals(model1p, model2p, method = 'Hungarian'):
     matrix = compute_distances_no_loops(model1p.params['W1'].T, model2p.params['W1'].T)
     try:
         if method == 'Hungarian':
+            from munkres import Munkres
             m = Munkres()
             indices = m.compute(matrix)
             indices_assignments = np.copy(indices)
