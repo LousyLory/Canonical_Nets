@@ -4,6 +4,10 @@ import numpy as np
 def canon_nets(model2, indices_to_copy_to, use_batchnorm = False):
     '''
     This function creates canonicalized networks
+    indices_to_copy_to are the new orderings of the correspoing
+    columns in W1 and rows in W2
+    model2 is the network to be modified
+    use_batchnorm is the flag to identify the use of batchnormalization
     '''
     model2p = deepcopy(model2)
 
