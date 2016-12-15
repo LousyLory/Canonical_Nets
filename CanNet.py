@@ -72,10 +72,10 @@ from src.creator import *
 from src.canonicalize import *
 from src.required_funcs import *
 
-accuracy = np.zeros((100,5))
+accuracy = np.zeros((1000,5))
 alpha = 0.5
 
-for net in range(100):
+for net in range(1000):
     # counter printer
     print "iteration: ", net
     
