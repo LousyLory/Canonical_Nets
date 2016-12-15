@@ -72,48 +72,51 @@ from src.creator import *
 from src.canonicalize import *
 from src.required_funcs import *
 
-accuracy = np.zeros((200,5))
+accuracy = np.zeros((100,5))
 alpha = 0.5
 
-for net in range(200):
+for net in range(100):
     # counter printer
     print "iteration: ", net
     
     # train net1
     model1 = FullyConnectedNet([100, 100], weight_scale=0.003, use_batchnorm = False, reg=0.6)
     solver1 = Solver(model1, data1,
-                            print_every=data1['X_train'].shape[0], num_epochs=100, batch_size=100,
+                            print_every=data1['X_train'].shape[0], num_epochs=50, batch_size=100,
                             update_rule='sgd',
                             optim_config={
                               'learning_rate': 0.03,
                             },verbose=False, lr_decay = 0.9,
                      )
     solver1.train()
-    
+    pass
     #train net2
     model2 = FullyConnectedNet([100, 100], weight_scale=0.003, use_batchnorm = False, reg=0.6)
-    solver2 = Solver(model1, data1,
-                            print_every=data1['X_train'].shape[0], num_epochs=100, batch_size=100,
+    solver2 = Solver(model2, data1,
+                            print_every=data1['X_train'].shape[0], num_epochs=50, batch_size=100,
                             update_rule='sgd',
                             optim_config={
                               'learning_rate': 0.03,
                             },verbose=False, lr_decay = 0.9,
                      )
     solver2.train()
-    
+    pass
     # obtain accuracy of net1
     y_val_pred = np.argmax(model1.loss(data1['X_val']), axis=1)
     accuracy[net,0] = (y_val_pred == data1['y_val']).mean()
+    print accuracy[net,0]
     
     # obtain accuracy of net2
     y_val_pred = np.argmax(model2.loss(data1['X_val']), axis=1)
     accuracy[net,1] = (y_val_pred == data1['y_val']).mean()
+    print accuracy[net,1]
     
     # average network generation
     avg_model = create_model(model1, model2, alpha)
     # avgerage network performance
     y_val_pred = np.argmax(avg_model.loss(data1['X_val']), axis=1)
     accuracy[net,2] = (y_val_pred == data1['y_val']).mean()
+    print accuracy[net,2]
     
     # canonicalizing model2 to look like model1
     # greedy method
@@ -124,6 +127,7 @@ for net in range(200):
     # avgerage network performance
     y_val_pred = np.argmax(avg_model_can_greedy.loss(data1['X_val']), axis=1)
     accuracy[net,3] = (y_val_pred == data1['y_val']).mean()
+    print accuracy[net,3]
     
     # hungarian method
     indices = match_vals(model1, model2, method='Hungarian')
@@ -133,6 +137,7 @@ for net in range(200):
     # avgerage network performance
     y_val_pred = np.argmax(avg_model_can_hung.loss(data1['X_val']), axis=1)
     accuracy[net,4] = (y_val_pred == data1['y_val']).mean()
+    print accuracy[net,4]
     
     '''
     # canonicalizing model1 to look like model2
