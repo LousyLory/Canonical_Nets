@@ -1,11 +1,17 @@
 import numpy as np
 from dist_fun import *
+from model_utils import weight_normer
 
-def match_vals(model1p, model2p, method = 'Hungarian'):
+def match_vals(model1p, model2p, method = 'Hungarian', is_normed = 'False'):
     '''
     This method defines matching vectors on the basis of function
     '''
-    matrix = compute_distances_no_loops(model2p.params['W1'].T, model1p.params['W1'].T)
+    if is_normed:
+        model2p_W1_alt = weight_normer(np.copy(model2p.params['W1']))
+        model1p_W1_alt = weight_normer(np.copy(model1p.params['W1']))
+        matrix = compute_distances_no_loops(model2p_W1_alt.T, model1p_W1_alt.T)
+    else:
+        matrix = compute_distances_no_loops(model2p.params['W1'].T, model1p.params['W1'].T)
     try:
         if method == 'Hungarian':
             from munkres import Munkres

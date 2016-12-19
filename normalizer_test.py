@@ -76,6 +76,7 @@ pass
 # check for normalizer
 model1, m1_w1_norms = weight_nomrer(model)
 
+'''
 # saving all variables
 import shelve
 filename='shelve.out'
@@ -90,3 +91,5 @@ for key in dir():
         #
         print('ERROR shelving: {0}'.format(key))
 my_shelf.close()
+'''
+pass
