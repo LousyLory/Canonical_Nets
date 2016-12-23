@@ -1,15 +1,19 @@
 import numpy as np
 from dist_fun import *
-from model_utils import weight_normer
+from model_utils import *
 
 def match_vals(model1p, model2p, method = 'Hungarian', is_normed = 'False'):
     '''
     This method defines matching vectors on the basis of function
     '''
-    if is_normed:
+    if is_normed == 'True':
         model2p_W1_alt = weight_normer(np.copy(model2p.params['W1']))
         model1p_W1_alt = weight_normer(np.copy(model1p.params['W1']))
         matrix = compute_distances_no_loops(model2p_W1_alt.T, model1p_W1_alt.T)
+    elif is_normed == 'Erik':
+        model1p = model_normer(model1p)
+        model2p = model_normer(model2p)
+        matrix = compute_distances_no_loops(model2p.params['W1'].T, model1p.params['W1'].T)
     else:
         matrix = compute_distances_no_loops(model2p.params['W1'].T, model1p.params['W1'].T)
     try:
@@ -34,4 +38,7 @@ def match_vals(model1p, model2p, method = 'Hungarian', is_normed = 'False'):
                     feat[i] = indices[i,j]
                     used[indices[i,j]] = 100
                     break
-    return feat
+    if is_normed == 'Erik':
+        return feat, model1p, model2p
+    else:
+        return feat

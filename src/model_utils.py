@@ -15,3 +15,18 @@ def weight_normer(W1):
     W1_norms = np.sum(np.abs(W1)**2,axis=-0)**(1./2)
     W1 /= W1_norms
     return W1
+
+def model_normer(model):
+    '''
+    This function normalizes the first layer weights
+    and updates the network for consistency
+    '''
+    new_model = deepcopy(model)
+    W1_norms = np.sum(np.abs(model.params['W1'])**2,axis=-0)**(1./2)
+    new_model.params['W1'] /= W1_norms
+    pass
+    W2 = np.copy(new_model.params['W2']).T
+    W2 *= W1_norms
+    new_model.params['W2'] = W2.T
+    pass
+    return new_model
