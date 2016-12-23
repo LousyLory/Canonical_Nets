@@ -60,17 +60,17 @@ from src.creator import *
 from src.canonicalize import *
 from src.required_funcs import *
 
-accuracy = np.zeros((1,5))
+accuracy = np.zeros((1000.,5))
 alpha = 0.5
 
-for net in range(1):
+for net in range(1000):
     # counter printer
     print "iteration: ", net
     
     # train net1
     model1 = FullyConnectedNet([100, 100], weight_scale=0.003, use_batchnorm = False, reg=0.6)
     solver1 = Solver(model1, data1,
-                            print_every=data1['X_train'].shape[0], num_epochs=50, batch_size=100,
+                            print_every=data1['X_train'].shape[0], num_epochs=100, batch_size=100,
                             update_rule='sgd',
                             optim_config={
                               'learning_rate': 0.03,
@@ -81,7 +81,7 @@ for net in range(1):
     #train net2
     model2 = FullyConnectedNet([100, 100], weight_scale=0.003, use_batchnorm = False, reg=0.6)
     solver2 = Solver(model2, data1,
-                            print_every=data1['X_train'].shape[0], num_epochs=50, batch_size=100,
+                            print_every=data1['X_train'].shape[0], num_epochs=100, batch_size=100,
                             update_rule='sgd',
                             optim_config={
                               'learning_rate': 0.03,
