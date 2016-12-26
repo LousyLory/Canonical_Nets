@@ -108,7 +108,7 @@ for net in range(1000):
     
     # canonicalizing model2 to look like model1
     # greedy method
-    indices, model1, model2 = match_vals(model1, model2, method='greedy', is_normed='Erik')
+    indices = match_vals(model1, model2, method='greedy', is_normed='True')
     canon_model2_greedy = canon_nets(model2, indices.astype(int), use_batchnorm = False)
     # average network generation
     avg_model_can_greedy = create_model(model1, canon_model2_greedy, alpha)
@@ -118,7 +118,7 @@ for net in range(1000):
     print accuracy[net,3]
     
     # hungarian method
-    indices, model1, model2 = match_vals(model1, model2, method='Hungarian', is_normed='Erik')
+    indices = match_vals(model1, model2, method='Hungarian', is_normed='True')
     '''
     # checking new models
     y_val_pred = np.argmax(model1.loss(data1['X_val']), axis=1)
