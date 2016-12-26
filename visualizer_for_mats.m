@@ -36,7 +36,7 @@ figure(2),
 ax1 = axes('Position',[0 0 1 1],'Visible','off');
 ax2 = axes('Position',[.3 .1 .6 .8]);
 
-plot(ax2, accuracy); title('validation accuracy of different models using canonicalization (w/o nomralization) vs number of runs');
+plot(ax2, accuracy); title('validation accuracy of different models using canonicalization (with nomralization) vs number of runs');
 legend('model1 accuracy', 'model2 accuracy', '1+2 accuracy', '1+2(greedy) accuracy', '1+2(hun) accuracy');
 xlabel('number of runs'), ylabel('validation accuracy');
 descr={'Number of cases in which ';
