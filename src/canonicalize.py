@@ -1,5 +1,6 @@
 from copy import deepcopy
 import numpy as np
+from required_funcs import *
 
 def canon_nets(model2, indices_to_copy_to, use_batchnorm = False):
     '''
@@ -12,6 +13,7 @@ def canon_nets(model2, indices_to_copy_to, use_batchnorm = False):
     model2p = deepcopy(model2)
 
     # altering networks
+    # reduce distance between layer 1
     model2p.params['W1'] = model2p.params['W1'][:,indices_to_copy_to]
     model2p.params['b1'] = model2p.params['b1'][indices_to_copy_to]
     if use_batchnorm == True:
@@ -32,3 +34,16 @@ def canon_nets(model2, indices_to_copy_to, use_batchnorm = False):
     model2p.params['b3'] = np.copy(model2.params['b3'])
     
     return model2p
+
+def full_canon_nets(model1, model2, method = 'Hungarian'):
+    '''
+    does all the way up canonicalization
+    ''' 
+    model1p = deepcopy(model1)
+    model2p = deepcopy(model2)
+
+    # altering nets
+    if method == 'greedy':
+        ids = match_vals(model1, model2, method='greedy', is_normed='False')
+    else:
+        ids = match_vals(model1, model2, method='Hungarian', is_normed='False')

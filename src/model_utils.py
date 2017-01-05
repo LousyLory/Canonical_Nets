@@ -22,14 +22,14 @@ def model_normer(model):
     and updates the network for consistency
     '''
     new_model = deepcopy(model)
-    W1_norms = np.sum(np.abs(model.params['W1'])**2,axis=-0)**(1./2)
+    W1_norms = np.sum(np.abs(new_model.params['W1'])**2,axis=-0)**(1./2)
     new_model.params['W1'] /= W1_norms
     pass
     W2 = np.copy(new_model.params['W2']).T
     W2 *= W1_norms
     new_model.params['W2'] = W2.T
     pass
-    W2_norms = np.sum(np.abs(model.params['W2']) ** 2, axis=-0) ** (1. / 2)
+    W2_norms = np.sum(np.abs(new_model.params['W2']) ** 2, axis=-0) ** (1. / 2)
     new_model.params['W2'] /= W2_norms
     pass
     W3 = np.copy(new_model.params['W3']).T
