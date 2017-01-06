@@ -44,6 +44,33 @@ def full_canon_nets(model1, model2, method = 'Hungarian'):
 
     # altering nets
     if method == 'greedy':
-        ids = match_vals(model1, model2, method='greedy', is_normed='False')
+        ids1 = match_vals(model1p, model2p, method='greedy', is_normed='False', layer='W1')
+        ids1 = ids1.astype(int)
     else:
-        ids = match_vals(model1, model2, method='Hungarian', is_normed='False')
+        ids1 = match_vals(model1p, model2p, method='Hungarian', is_normed='False', layer='W1')
+        ids1 = ids1.astype(int)
+    # altering layer 1
+    model2p.params['W1'] = model2p.params['W1'][:, ids1]
+    model2p.params['b1'] = model2p.params['b1'][ids1]
+    #altering layer 2
+    model2p.params['W2'] = model2p.params['W2'][ids1, :]
+    model2p.params['b2'] = np.copy(model2p.params['b2'])
+    # altering layer 3
+    model2p.params['W3'] = np.copy(model2.params['W3'])
+    model2p.params['b3'] = np.copy(model2.params['b3'])
+
+    # altering net layer 2
+    if method == 'greedy':
+        ids2 = match_vals(model1p, model2p, method='greedy', is_normed='False', layer='W2')
+        ids2 = ids2.astype(int)
+    else:
+        ids2 = match_vals(model1p, model2p, method='Hungarian', is_normed='False', layer='W2')
+        ids2 = ids2.astype(int)
+    # altering layer 2
+    model2p.params['W2'] = model2p.params['W2'][:, ids2]
+    model2p.params['b2'] = model2p.params['b2'][ids2]
+    # altering layer 3
+    model2p.params['W3'] = model2p.params['W3'][ids2, :]
+    model2p.params['b3'] = model2p.params['b3']
+
+    return model2p
