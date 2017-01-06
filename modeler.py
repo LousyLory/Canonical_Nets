@@ -36,7 +36,7 @@ data1 = {
         'X_test': data['X_test'], 'y_test' : data['y_test'],
         }
 
-for i in range(1):
+for i in range(200):
     model1 = FullyConnectedNet([100, 100], weight_scale=0.003, use_batchnorm = False, reg=0.6)
     solver1 = Solver(model1, data1,
                             print_every=data1['X_train'].shape[0], num_epochs=100, batch_size=100,
