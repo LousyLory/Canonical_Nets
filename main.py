@@ -37,14 +37,15 @@ data1 = {
         }
 
 # external variables
-accuracy = np.zeros((1,6))
+accuracy = np.zeros((200,6))
 alpha = 0.5
 
 from src.creator import *
 from src.model_utils import *
 
 # main loop
-for net in range(1):
+for net in range(200):
+    print net
     name = 'models/' + str(net) + '.pkl'
     with open(name, 'rb') as input:
         model1 = pickle.load(input)
